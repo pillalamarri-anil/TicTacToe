@@ -41,4 +41,19 @@ public class DiagMatchWinStrategy implements GameWinStrategy {
         }
         return false;
     }
+
+    @Override
+    public void unDo(Move move, Board board) {
+
+        Cell cell = move.getCell();
+        Player player = move.getPlayer();
+
+        if(cell.getRow() == cell.getCol())
+            primaryDiagCount.put( player, primaryDiagCount.get( player) - 1);
+
+        if(cell.getRow() == board.getDimension() - 1 - cell.getCol())
+            secondaryDiagCount.put( player, secondaryDiagCount.get( player) - 1);
+
+
+    }
 }

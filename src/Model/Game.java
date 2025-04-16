@@ -60,9 +60,7 @@ public class Game {
             if(isWin)
                 return true;
         }
-
-        // draw case
-        return moves.size() == board.dimension * board.dimension;
+        return false;
     }
 
     public void makeMove()
@@ -92,6 +90,11 @@ public class Game {
             return;
         }
 
+
+        // draw case
+        if(moves.size() == board.dimension * board.dimension)
+            gameState = GameState.COMPLETE;
+
         // update next player
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
@@ -110,6 +113,34 @@ public class Game {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    private void updateStrategies(Move move, Board board)
+    {
+        for(GameWinStrategy strategy : gameWinStrategies)
+            strategy.unDo(move, board);
+    }
+
+    public void unDo()
+    {
+        if(moves.isEmpty())
+        {
+            System.out.println("Nothing to do");
+            return;
+        }
+
+        // remove last move
+        Move move = moves.removeLast();
+
+        // empty the cell
+        Cell cell = move.getCell();
+        board.getCell(cell.getRow(), cell.getCol()).setState(CellState.EMPTY);
+
+        // update the gamewinStrategies
+        updateStrategies(move, board);
+
+        // set the curr player to prev palyer
+        currentPlayerIndex = (currentPlayerIndex - 1 + players.size()) % players.size();
     }
 
     public static Builder getBuilder()

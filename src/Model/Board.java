@@ -18,6 +18,10 @@ public class Board {
         this.dimension = dimension;
     }
 
+    public Cell getCell(int row, int col) {
+        return cells.get(row).get(col);
+    }
+
     public Board(int dimension) {
         this.dimension = dimension;
         this.cells = new ArrayList();

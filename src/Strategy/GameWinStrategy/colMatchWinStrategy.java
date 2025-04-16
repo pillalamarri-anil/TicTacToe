@@ -31,4 +31,15 @@ public class colMatchWinStrategy implements GameWinStrategy {
 
         return false;
     }
+
+    @Override
+    public void unDo(Move move, Board board) {
+        Cell cell = move.getCell();
+        Player player = move.getPlayer();
+        HashMap<Player, Integer> playerCount = colPlayerCount.get(cell.getCol());
+        playerCount.put(player, playerCount.get(player) - 1);
+        colPlayerCount.put(cell.getCol(), playerCount);
+    }
+
+
 }

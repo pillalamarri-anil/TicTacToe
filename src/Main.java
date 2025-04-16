@@ -21,7 +21,7 @@ public class Main {
 
 
         Player player1 = new Player("Anil", new Symbol('A', ""), PlayerType.HUMAN);
-        Player player2 = new Player("Sunil", new Symbol('S', ""), PlayerType.HUMAN);
+        Player player2 = new Player("Rishitha", new Symbol('R', ""), PlayerType.HUMAN);
 
 
         GameWinStrategy strategy1 = GameWinStrategyFactory.create(GameWinStrategyType.ROW_MATCH);
@@ -35,10 +35,20 @@ public class Main {
 
         Game game = gameController.startGame(3, players, strategyList);
 
+        Scanner scanner = new Scanner(System.in);
+
         while(game.getGameState() == GameState.IN_PROGRESS)
         {
             game.printBoard();
-           game.makeMove();
+            gameController.makeMove(game);
+
+            System.out.println("Do you want to unDo? (Y/N)");
+            char choice = scanner.next().charAt(0);
+
+            if(choice == 'Y')
+            {
+                gameController.unDo(game);
+            }
         }
 
         game.printBoard();
