@@ -2,10 +2,13 @@ package Model;
 
 import Enums.PlayerType;
 
+import java.util.Scanner;
+
 public class Player {
     private String playerName;
     private Symbol symbol;
     private PlayerType playerType;
+    private Scanner scanner = new Scanner(System.in);
 
     public Move makeMove(int row, int col)
     {
@@ -28,6 +31,27 @@ public class Player {
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public Cell chooseCellToPlay(Board board)
+    {
+        System.out.println(getPlayerName() + " make move");
+        System.out.println("Enter row:");
+        int row = scanner.nextInt();
+
+        System.out.println("Enter col:");
+        int col = scanner.nextInt();
+
+        return new Cell(row, col);
+    }
+
+    public boolean unDo()
+    {
+        System.out.println("Do you want to unDo? (Y/N)");
+        char answer = scanner.next().charAt(0);
+        if(answer == 'Y')
+            return true;
+        return false;
     }
 
     public Symbol getPlayerSymbol() {

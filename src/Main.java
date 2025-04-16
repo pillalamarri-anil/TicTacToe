@@ -1,10 +1,12 @@
 import Controller.GameController;
+import Enums.BotDifficultyLevel;
 import Enums.GameState;
 import Enums.GameWinStrategyType;
 import Enums.PlayerType;
 import Exceptions.PlayerCountNotValidException;
 import Exceptions.SymbolNotUniqueException;
 import Factory.GameWinStrategyFactory;
+import Model.Bot;
 import Model.Game;
 import Model.Player;
 import Model.Symbol;
@@ -19,10 +21,8 @@ import Controller.GameController;
 public class Main {
     public static void main(String[] args) throws SymbolNotUniqueException, PlayerCountNotValidException {
 
-
         Player player1 = new Player("Anil", new Symbol('A', ""), PlayerType.HUMAN);
-        Player player2 = new Player("Rishitha", new Symbol('R', ""), PlayerType.HUMAN);
-
+        Player player2 = new Bot("BOT", new Symbol('B', ""), BotDifficultyLevel.HARD);
 
         GameWinStrategy strategy1 = GameWinStrategyFactory.create(GameWinStrategyType.ROW_MATCH);
         GameWinStrategy strategy2 = GameWinStrategyFactory.create(GameWinStrategyType.COLUMN_MATCH);
@@ -41,14 +41,7 @@ public class Main {
         {
             game.printBoard();
             gameController.makeMove(game);
-
-            System.out.println("Do you want to unDo? (Y/N)");
-            char choice = scanner.next().charAt(0);
-
-            if(choice == 'Y')
-            {
-                gameController.unDo(game);
-            }
+            gameController.handleUndo(game);
         }
 
         game.printBoard();

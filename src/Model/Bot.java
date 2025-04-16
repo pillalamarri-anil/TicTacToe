@@ -16,16 +16,23 @@ public class Bot extends Player {
         moveStrategy = BotMoveStrategyFactory.create(difficulty);
     }
 
-    @Override
-    public Move makeMove(int row, int col) {
-        return moveStrategy.move();
-    }
-
     public BotDifficultyLevel getDifficulty() {
         return difficulty;
     }
 
     public void setDifficulty(BotDifficultyLevel difficulty) {
         this.difficulty = difficulty;
+    }
+
+    @Override
+    public Cell chooseCellToPlay(Board board)
+    {
+        return moveStrategy.chooseCellToPlay(board);
+    }
+
+    @Override
+    public boolean unDo()
+    {
+        return false;
     }
 }

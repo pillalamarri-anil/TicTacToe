@@ -22,8 +22,8 @@ public class GameController {
         game.makeMove();
     }
 
-    public void unDo(Game game)
+    public void handleUndo(Game game)
     {
-         game.unDo();
+         game.HandleUndo();
     }
 }

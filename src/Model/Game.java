@@ -65,14 +65,11 @@ public class Game {
 
     public void makeMove()
     {
-        System.out.println(players.get(currentPlayerIndex).getPlayerName() + " make move");
-        System.out.println("Enter row:");
-        int row = scanner.nextInt();
-
-        System.out.println("Enter col:");
-        int col = scanner.nextInt();
+        Cell cell = players.get(currentPlayerIndex).chooseCellToPlay(board);
 
         // validate move
+        int row = cell.getRow();
+        int col = cell.getCol();
         if(!validateMove(row, col))
             return;
 
@@ -121,8 +118,12 @@ public class Game {
             strategy.unDo(move, board);
     }
 
-    public void unDo()
+    public void HandleUndo()
     {
+        boolean isUndo = players.get(currentPlayerIndex).unDo();
+        if(!isUndo)
+            return;
+
         if(moves.isEmpty())
         {
             System.out.println("Nothing to do");
